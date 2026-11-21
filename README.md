@@ -1,0 +1,2 @@
+# bmp_image_generator
+一个生成bmp格式图片的软件仓库
