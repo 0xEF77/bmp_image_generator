@@ -1,3 +1,13 @@
+//! 生成一张 1920×1080 的 24 位随机噪点 BMP 图片。
+//!
+//! 程序流程：
+//!
+//! 1. 按尺寸创建空的 BMP 结构；
+//! 2. 为每个像素生成随机的蓝、绿、红分量；
+//! 3. 把结构序列化为字节流，写入当前目录的 `image.bmp`。
+//!
+//! 运行方式：`cargo run --release`。
+
 use std::io::{BufWriter, Write};
 use std::fs::File;
 use BMP_Image_Generator::image_file::create_image;
@@ -26,6 +36,10 @@ fn main() -> std::io::Result<()> {
     Ok(())
 }
 
+/// 生成 `size[0] × size[1]` 个随机像素，依次填充到 `raw` 中。
+///
+/// 每个像素的蓝、绿、红分量都由 `fastrand` 在 `0..=255` 范围内随机取值。
+/// 返回 `io::Result` 是为了和调用方保持一致的错误处理风格，当前实现不会失败。
 fn fill_raw_data(raw: &mut Vec<Pixel>, size:&[u32; 2])-> std::io::Result<()> {
     for _i in 0..size[0]*size[1] {
         let pixel = [fastrand_u8(..), fastrand_u8(..), fastrand_u8(..)];
