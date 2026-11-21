@@ -1,4 +1,8 @@
-./gitignore
-./idea
-./Cargo.lock
-./target
+# Rust 构建产物
+/target/
+
+# 编辑器配置（IntelliJ IDEA / CLion）
+/.idea/
+
+# 程序生成的图片
+/image.bmp
