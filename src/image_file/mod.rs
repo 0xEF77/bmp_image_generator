@@ -21,7 +21,7 @@
 //! - [`file_info`]：文件头、信息头与调色板的结构与序列化
 //! - [`pixels_data`]：单个像素与像素数据容器的结构与序列化
 //! - [`create_image`]：面向调用者的创建、填充与序列化入口
-pub mod pixels_data;
-pub mod file_info;
-pub mod create_image;
 pub mod bitmap;
+pub mod create_image;
+pub mod file_info;
+pub mod pixels_data;

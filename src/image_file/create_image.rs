@@ -8,9 +8,9 @@
 //!
 //! 完整示例见 crate 文档。
 
-use crate::image_file::pixels_data::{ImageData, Pixel};
-use crate::image_file::file_info::{BitMapFileHeader, BitMapInfoHeader, ColorPallet};
 use crate::image_file::bitmap::BitMap;
+use crate::image_file::file_info::{BitMapFileHeader, BitMapInfoHeader, ColorPallet};
+use crate::image_file::pixels_data::{ImageData, Pixel};
 
 /// 创建一张空白图像。
 ///
@@ -21,8 +21,7 @@ use crate::image_file::bitmap::BitMap;
 /// # Panics
 ///
 /// 当 `bits_per_pixel` 不是 24 或 32 时会 panic。
-pub fn new(size:[u32; 2], bits_per_pixel:u16) -> BitMap {
-
+pub fn new(size: [u32; 2], bits_per_pixel: u16) -> BitMap {
     if !(bits_per_pixel == 24 || bits_per_pixel == 32) {
         panic!("该程序暂不支持像素位深8bits以下的图像数据.");
     }
@@ -43,7 +42,7 @@ pub fn new(size:[u32; 2], bits_per_pixel:u16) -> BitMap {
 /// 用长度为 3 的数组创建一个像素。
 ///
 /// 数组按 BMP 的存储顺序解释为 `[蓝, 绿, 红]`，并直接传给 `Pixel::new`。
-pub fn new_pixel(pixel:[u8;3]) -> Pixel {
+pub fn new_pixel(pixel: [u8; 3]) -> Pixel {
     Pixel::new(pixel[0], pixel[1], pixel[2])
 }
 
@@ -51,7 +50,7 @@ pub fn new_pixel(pixel:[u8;3]) -> Pixel {
 ///
 /// 容器中已有的像素会被 `raw` 覆盖；调用者需要保证 `raw` 中的像素数量与
 /// 图像的宽高一致。
-pub fn write(image: &mut ImageData, raw: Vec<Pixel>) ->std::io::Result<()>{
+pub fn write(image: &mut ImageData, raw: Vec<Pixel>) -> std::io::Result<()> {
     ImageData::write(image, raw)?;
 
     Ok(())
@@ -61,7 +60,7 @@ pub fn write(image: &mut ImageData, raw: Vec<Pixel>) ->std::io::Result<()>{
 ///
 /// 写入顺序严格遵循 BMP 规范：文件头 → 信息头 → 调色板 → 像素数据。
 /// 得到的字节流可以直接写入 `.bmp` 文件。
-pub fn translator(bmp: BitMap, data_stream: &mut Vec<u8>) -> std::io::Result<()>{
+pub fn translator(bmp: BitMap, data_stream: &mut Vec<u8>) -> std::io::Result<()> {
     bmp.bit_map_file_header.translator(data_stream)?;
     bmp.bit_map_info_header.translator(data_stream)?;
     bmp.color_pallet.translator(data_stream)?;
